@@ -33,12 +33,12 @@ jobs:
 
       - name: Install Google Cloud SDK
         run: |
-          export CLOUDSDK_INSTALL_DIR=/usr/local/gcloud
+          export CLOUDSDK_INSTALL_DIR=$HOME/gcloud
           curl https://sdk.cloud.google.com | bash
 
       - name: Authenticate with gcloud
         run: |
-          source /usr/local/gcloud/path.bash.inc
+          source $HOME/gcloud/path.bash.inc
           gcloud auth application-default login
 
       - name: Setup clasp
