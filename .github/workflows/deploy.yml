@@ -29,22 +29,19 @@ jobs:
         name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v2"
         with:
+          token_format: "access_token"
           workload_identity_provider: "projects/1091859931237/locations/global/workloadIdentityPools/github/providers/my-repo"
           service_account: "psywo-service-account@psywo-427418.iam.gserviceaccount.com"
-
-      - name: Get gcloud auth token
-        id: auth_token
-        run: echo ::set-output name=token::$(gcloud auth print-access-token)
 
       - name: Setup clasp
         run: |
           echo '{
-            "access_token": "${{ steps.auth_token.outputs.access_token }}",
+            "access_token": "${{ steps.auth.outputs.access_token }}",
             "refresh_token": " ",
             "scope": "https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.deployments",
             "token_type": "Bearer",
             "expiry_date": 9999999999999
           }' > ~/.clasprc.json
 
-      - name: Push to Apps Script
-        run: npx clasp push
+      - name: Push
+        run: npx clasp login --status
