@@ -41,3 +41,6 @@ jobs:
             "token_type": "Bearer",
             "expiry_date": 9999999999999
           }' > ~/.clasprc.json
+
+      - name: Push
+        run: npx clasp login && npx clasp push
