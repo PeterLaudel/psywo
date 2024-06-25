@@ -21,13 +21,23 @@ jobs:
       - name: Install dependencies
         run: npm i
 
-      - name: create-json
-        id: create-json
-        uses: jsdaniell/create-json@1.1.2
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0.4.0"
         with:
-          name: "creds.json"
-          json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          workload_identity_provider: "projects/1091859931237/locations/global/workloadIdentityPools/github/providers/my-repo"
+          service_account: "psywo-service-account@psywo-427418.iam.gserviceaccount.com"
+
+      - name: Install Google Cloud SDK
+        run: |
+          export CLOUDSDK_INSTALL_DIR=/usr/local/gcloud
+          curl https://sdk.cloud.google.com | bash
+
+      - name: Authenticate with gcloud
+        run: |
+          source /usr/local/gcloud/path.bash.inc
+          gcloud auth application-default login
 
       - name: Setup clasp
         run: |
-          npx clasp login --creds creds.json && npx clasp push
+          npx clasp login --creds ~/.config/gcloud/application_default_credentials.json
