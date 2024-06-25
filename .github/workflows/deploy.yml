@@ -24,6 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: npm i
+
       - id: "auth"
         name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v2"
@@ -31,16 +32,12 @@ jobs:
           workload_identity_provider: "projects/1091859931237/locations/global/workloadIdentityPools/github/providers/my-repo"
           service_account: "psywo-service-account@psywo-427418.iam.gserviceaccount.com"
 
-      - name: Install Google Cloud SDK
-        run: |
-          export CLOUDSDK_INSTALL_DIR=$HOME/gcloud
-          curl https://sdk.cloud.google.com | bash
-
-      - name: Authenticate with gcloud
-        run: |
-          source $HOME/gcloud/path.bash.inc
-          gcloud auth application-default login
-
       - name: Setup clasp
         run: |
-          npx clasp login --creds ~/.config/gcloud/application_default_credentials.json
+          echo '{
+            "access_token": "${{ steps.auth.outputs.access_token }}",
+            "refresh_token": " ",
+            "scope": "https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.deployments",
+            "token_type": "Bearer",
+            "expiry_date": 9999999999999
+          }' > ~/.clasprc.json
