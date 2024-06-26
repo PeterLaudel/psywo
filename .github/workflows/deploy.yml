@@ -36,12 +36,15 @@ jobs:
       - name: Setup clasp
         run: |
           echo '{
-            "access_token": "${{ steps.auth.outputs.token }}",
+            "access_token": "${{ steps.auth.outputs.access_token }}",
             "refresh_token": " ",
             "scope": "https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.deployments",
             "token_type": "Bearer",
             "expiry_date": 9999999999999
           }' > ~/.clasprc.json
 
+      - name: show token
+        run: cat ~/.clasprc.json
+
       - name: Push
-        run: npx clasp login --status
+        run: npx clasp push
