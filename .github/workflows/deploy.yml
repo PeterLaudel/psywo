@@ -33,18 +33,11 @@ jobs:
           service_account: "psywo-service-account@psywo-427418.iam.gserviceaccount.com"
           token_format: access_token
 
-      - name: Setup clasp
-        run: |
-          echo '{
-            "access_token": "${{ steps.auth.outputs.access_token }}",
-            "refresh_token": " ",
-            "scope": "https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.deployments",
-            "token_type": "Bearer",
-            "expiry_date": 9999999999999
-          }' > ~/.clasprc.json
+      - uses: namaggarwal/clasp-token-action@v0.0.1
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
 
-      - name: show token
-        run: cat ~/.clasprc.json
-
-      - name: Push
-        run: npx clasp push
+      - name: Push code to Google Apps Script
+        run: npm run push-to-app
