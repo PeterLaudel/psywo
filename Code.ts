@@ -3,6 +3,7 @@ function createEnvironment() {
   const form = createForm();
 
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
+
   ScriptApp.newTrigger("onFormSubmit")
     .forSpreadsheet(sheet)
     .onFormSubmit()
@@ -64,7 +65,7 @@ function createForm() {
   return form;
 }
 
-function onSubmitForm(e: GoogleAppsScript.Events.SheetsOnFormSubmit) {
+function onFormSubmit(e: GoogleAppsScript.Events.SheetsOnFormSubmit) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   const lastRow = e.range.getLastRow();
   const lastColumn = e.range.getLastColumn();
