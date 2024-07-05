@@ -3,7 +3,7 @@ function createEnvironment() {
   const form = createForm();
 
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
-  ScriptApp.newTrigger("onSubmitForm")
+  ScriptApp.newTrigger("onFormSubmit")
     .forSpreadsheet(sheet)
     .onFormSubmit()
     .create();
@@ -64,23 +64,28 @@ function createForm() {
   return form;
 }
 
-function onSubmitForm(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var lastRow = sheet.getLastRow();
-  var lastColumn = sheet.getLastColumn();
+function onSubmitForm(e: GoogleAppsScript.Events.SheetsOnFormSubmit) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const lastRow = e.range.getLastRow();
+  const lastColumn = e.range.getLastColumn();
 
   // Fügt eine neue Spalte nach der letzten Spalte hinzu, wenn sie noch nicht existiert
   if (sheet.getRange(1, lastColumn).getValue() !== "Schiffre") {
     sheet.insertColumnAfter(lastColumn);
     sheet.getRange(1, lastColumn + 1).setValue("Schiffre");
   }
-  const itemResponses = e.response.getItemResponses();
-  const lastName = itemResponses[0].getResponse().toString();
-  const birthDate = itemResponses[2].getResponse().toString();
-  const [month, day, year] = birthDate.split("/");
-  const shortYear = year.slice(-2); // Die letzten zwei Ziffern des Jahres
-  const cipher = `${month.padStart(2, "0")}${day.padStart(2, "0")}${shortYear}`;
+
+  const lastName = e.namedValues["Name"];
+  const birthDate = e.namedValues["Geburtsdatum"];
+  Logger.log(lastName);
+  Logger.log(birthDate);
+  const [month, day, year] = birthDate[0].split("/");
+  const cipher = `${day.padStart(2, "0")}${month.padStart(2, "0")}${year.slice(
+    -2
+  )}`;
 
   // Setzt den Wert der Zelle in der neuen Spalte für die letzte Zeile
-  sheet.getRange(lastRow, lastColumn + 1).setValue(lastName[0] + cipher);
+  sheet
+    .getRange(lastRow, lastColumn + 1)
+    .setValue(lastName[0].charAt(0) + cipher);
 }
