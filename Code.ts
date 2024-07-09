@@ -76,17 +76,36 @@ function onFormSubmit(e: GoogleAppsScript.Events.SheetsOnFormSubmit) {
     sheet.getRange(1, lastColumn + 1).setValue("Schiffre");
   }
 
-  const lastName = e.namedValues["Name"];
-  const birthDate = e.namedValues["Geburtsdatum"];
-  Logger.log(lastName);
-  Logger.log(birthDate);
-  const [month, day, year] = birthDate[0].split("/");
+  const lastName = e.namedValues["Name"][0];
+  const birthDate = e.namedValues["Geburtsdatum"][0];
+  const [month, day, year] = birthDate.split("/");
   const cipher = `${day.padStart(2, "0")}${month.padStart(2, "0")}${year.slice(
     -2
   )}`;
 
   // Setzt den Wert der Zelle in der neuen Spalte für die letzte Zeile
+  sheet.getRange(lastRow, lastColumn + 1).setValue(lastName.charAt(0) + cipher);
+}
+
+function createInvoice() {
+  const template = SpreadsheetApp.openById(
+    "1pnAu7waOR2fWg8Bph9z-pZETlkyZEHsIYXqDTYZMxXI"
+  );
+
+  const newSpreadsheet = template.copy("Rechnung 1");
+  const sheet = newSpreadsheet.getActiveSheet();
+
+  sheet.getRange("B1:D1").setValue("Mein Unternehmen");
+  sheet.getRange("B2:D2").setValue("Straße");
+  sheet.getRange("B3:D3").setValue("PLZ Stadt");
+  sheet.getRange("B4:D4").setValue("Telefonnummer");
+
   sheet
-    .getRange(lastRow, lastColumn + 1)
-    .setValue(lastName[0].charAt(0) + cipher);
+    .getRange("B9:D9")
+    .setValue(`Rechnungsdatum ${new Date().toLocaleDateString()}`);
+
+  sheet.getRange("B12:C12").setValue("Name");
+  sheet.getRange("B13:C13").setValue("Straße");
+  sheet.getRange("B14:C14").setValue("PLZ Stadt");
+  sheet.getRange("B15:C15").clearContent();
 }
