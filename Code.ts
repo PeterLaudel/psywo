@@ -71,8 +71,7 @@ function onFormSubmit(e: GoogleAppsScript.Events.SheetsOnFormSubmit) {
   const lastColumn = e.range.getLastColumn();
 
   // Fügt eine neue Spalte nach der letzten Spalte hinzu, wenn sie noch nicht existiert
-  if (sheet.getRange(1, lastColumn).getValue() !== "Schiffre") {
-    sheet.insertColumnAfter(lastColumn);
+  if (sheet.getRange(1, lastColumn + 1).getValue() !== "Schiffre") {
     sheet.getRange(1, lastColumn + 1).setValue("Schiffre");
   }
 
