@@ -95,10 +95,10 @@ function createInvoice() {
   const newSpreadsheet = template.copy("Rechnung 1");
   const sheet = newSpreadsheet.getActiveSheet();
 
-  sheet.getRange("B1:D1").setValue("Mein Unternehmen");
-  sheet.getRange("B2:D2").setValue("Straße");
-  sheet.getRange("B3:D3").setValue("PLZ Stadt");
-  sheet.getRange("B4:D4").setValue("Telefonnummer");
+  sheet.getRange("B3:D3").setValue("Mein Unternehmen");
+  sheet.getRange("B4:D4").setValue("Straße");
+  sheet.getRange("B5:D5").setValue("PLZ Stadt");
+  sheet.getRange("B6:D6").setValue("Telefonnummer");
 
   sheet
     .getRange("B9:D9")
