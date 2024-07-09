@@ -8,6 +8,25 @@ function createEnvironment() {
     .forSpreadsheet(sheet)
     .onFormSubmit()
     .create();
+
+  ScriptApp.newTrigger("onOpen").forSpreadsheet(sheet).onOpen().create();
+}
+
+function showCreatePationtDialog() {
+  const form = createForm();
+
+  const htmlOutput = HtmlService.createHtmlOutput(
+    `<a href="${form.getPublishedUrl()}">Beispiel-Link</a>`
+  );
+
+  SpreadsheetApp.getUi().showSidebar(htmlOutput);
+}
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("Patientenverwaltung")
+    .addItem("Patienten anlegen", "showCreatePationtDialog")
+    .addToUi();
 }
 
 function findFileByName(
