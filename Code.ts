@@ -12,7 +12,7 @@ function createEnvironment() {
   ScriptApp.newTrigger("onOpen").forSpreadsheet(sheet).onOpen().create();
 }
 
-function showCreatePationtDialog() {
+function showCreatePatientDialog() {
   const form = createForm();
 
   const htmlOutput = HtmlService.createHtmlOutput(
@@ -25,7 +25,7 @@ function showCreatePationtDialog() {
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("Patientenverwaltung")
-    .addItem("Patienten anlegen", "showCreatePationtDialog")
+    .addItem("Patienten anlegen", "showCreatePatientDialog")
     .addToUi();
 }
 
