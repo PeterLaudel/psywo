@@ -4,6 +4,10 @@ function createEnvironment() {
 
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
 
+  sheet.addMenu("Patientenverwaltung", [
+    { name: "Patienten anlegen", functionName: "showCreatePatientDialog" },
+  ]);
+
   ScriptApp.newTrigger("onFormSubmit")
     .forSpreadsheet(sheet)
     .onFormSubmit()
@@ -16,7 +20,7 @@ function showCreatePatientDialog() {
   const form = createForm();
 
   const htmlOutput = HtmlService.createHtmlOutput(
-    `<a href="${form.getPublishedUrl()}">Beispiel-Link</a>`
+    `<iframe style="position: absolute; height: 100%; border: none" src="${form.getPublishedUrl()}">Wird geladen...</iframe>`
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
