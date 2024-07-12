@@ -38,7 +38,7 @@ class PatientRepository {
     this.spreadSheet = sheet;
   }
 
-  createPatient(patient: CreatePatient) {
+  addPatient(patient: CreatePatient) {
     const sheet = this.spreadSheet.getActiveSheet();
     const lastRow = sheet.getLastRow();
     const range = sheet.getRange(lastRow + 1, 1, 1, 9);
@@ -62,5 +62,35 @@ class PatientRepository {
       cipher,
     ];
     range.setValues([values]);
+  }
+
+  getPatients() {
+    const sheet = this.spreadSheet.getActiveSheet();
+    const rows = sheet.getDataRange().getValues();
+    return rows
+      .slice(1)
+      .map(
+        ([
+          createdAt,
+          firstName,
+          lastName,
+          birthdate,
+          email,
+          street,
+          postalCode,
+          city,
+          shipCode,
+        ]) => ({
+          createdAt,
+          firstName,
+          lastName,
+          birthdate,
+          email,
+          street,
+          postalCode,
+          city,
+          shipCode,
+        })
+      );
   }
 }

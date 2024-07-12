@@ -73,7 +73,7 @@ function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
   const postalCode = itemResponses[5].getResponse().toString();
   const city = itemResponses[6].getResponse().toString();
 
-  Patients.repository().createPatient({
+  Patients.repository().addPatient({
     firstName,
     lastName,
     birthdate,
