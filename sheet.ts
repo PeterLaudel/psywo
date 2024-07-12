@@ -1,3 +1,5 @@
+import { PatientForm } from "./form";
+
 export class PatientSheet {
   static sheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
 
@@ -59,7 +61,7 @@ function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
 
 function showPatientForm() {
   const htmlOutput = HtmlService.createHtmlOutput(
-    `<iframe style="position: absolute; height: 100%; border: none" src="www.google.de">Wird geladen...</iframe>`
+    `<iframe style="position: absolute; height: 100%; border: none" src="${PatientForm.form()}">Wird geladen...</iframe>`
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
