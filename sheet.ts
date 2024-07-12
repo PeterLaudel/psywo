@@ -36,7 +36,6 @@ function createSheet() {
   sheet.getRange("A1:I1").setFontWeight("bold");
   sheet.getRange("A1:I1").setBackground("#f0f0f0");
   sheet.getRange("A1:I1").setHorizontalAlignment("left");
-  sheet.getRange("A1:I1").setBorder(false, false, true, false, false, false);
   sheet.getRange("A1").setValue("Erstellt am");
   sheet.getRange("B1").setValue("Vorname");
   sheet.getRange("C1").setValue("Nachname");
@@ -52,8 +51,8 @@ function createSheet() {
   return sheet;
 }
 
-function onOpen() {
-  SpreadsheetApp.getActiveSpreadsheet().addMenu("Patienten", [
+function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
+  e.source.addMenu("Patienten", [
     { name: "Patienten Anlegen", functionName: "showPatientForm" },
   ]);
 }
