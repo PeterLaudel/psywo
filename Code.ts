@@ -1,7 +1,9 @@
 import { PatientSheet } from "./sheet";
+import { TherapyCalender } from "./calender";
 
 function createEnvironment() {
-  const sheet = PatientSheet.sheet();
+  PatientSheet.sheet();
+  TherapyCalender.calendar();
 }
 
 // function createInvoice() {
