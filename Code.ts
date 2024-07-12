@@ -6,10 +6,6 @@ function createEnvironment() {
 
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
 
-  sheet.addMenu("Patientenverwaltung", [
-    { name: "Patienten anlegen", functionName: "showCreatePatientDialog" },
-  ]);
-
   ScriptApp.newTrigger("onFormSubmit")
     .forSpreadsheet(sheet)
     .onFormSubmit()

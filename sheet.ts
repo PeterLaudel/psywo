@@ -1,5 +1,3 @@
-export const FILENAME = "Patienten";
-
 export class PatientSheet {
   static sheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
 
@@ -26,11 +24,13 @@ function findFileByName(
 }
 
 function createSheet() {
+  const fileName = "Patienten";
+
   const files = DriveApp.getFilesByType(MimeType.GOOGLE_SHEETS);
-  const file = findFileByName(FILENAME, files);
+  const file = findFileByName(fileName, files);
   if (file !== null) return SpreadsheetApp.openById(file.getId());
 
-  const sheet = SpreadsheetApp.create(FILENAME);
+  const sheet = SpreadsheetApp.create(fileName);
 
   sheet.setFrozenRows(1);
   sheet.getRange("A1:I1").setFontWeight("bold");
