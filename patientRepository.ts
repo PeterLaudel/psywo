@@ -51,7 +51,7 @@ class PatientRepository {
     const cipher = `${firstLetter}${day}${month}${year}`;
 
     const values = [
-      Date.now(),
+      new Date(),
       patient.firstName,
       patient.lastName,
       patient.birthdate,
