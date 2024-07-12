@@ -1,5 +1,7 @@
+import { PatientSheet } from "./sheet";
+
 function createEnvironment() {
-  const sheet = createSheet();
+  const sheet = PatientSheet.sheet();
   const form = createForm();
 
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
@@ -16,23 +18,6 @@ function createEnvironment() {
   ScriptApp.newTrigger("onOpen").forSpreadsheet(sheet).onOpen().create();
 }
 
-function showCreatePatientDialog() {
-  const form = createForm();
-
-  const htmlOutput = HtmlService.createHtmlOutput(
-    `<iframe style="position: absolute; height: 100%; border: none" src="${form.getPublishedUrl()}">Wird geladen...</iframe>`
-  );
-
-  SpreadsheetApp.getUi().showSidebar(htmlOutput);
-}
-
-function onOpen() {
-  SpreadsheetApp.getUi()
-    .createMenu("Patientenverwaltung")
-    .addItem("Patienten anlegen", "showCreatePatientDialog")
-    .addToUi();
-}
-
 function findFileByName(
   fileName: string,
   files: GoogleAppsScript.Drive.FileIterator
@@ -44,15 +29,6 @@ function findFileByName(
     }
   }
   return null;
-}
-
-function createSheet() {
-  const fileName = "Patienten";
-  const files = DriveApp.getFilesByType(MimeType.GOOGLE_SHEETS);
-  const file = findFileByName(fileName, files);
-  if (file !== null) return SpreadsheetApp.openById(file.getId());
-
-  return SpreadsheetApp.create(fileName);
 }
 
 function createForm() {
