@@ -46,7 +46,7 @@ class PatientRepository {
     const firstLetter = patient.lastName.charAt(0);
     const birthDate = patient.birthdate;
     const day = birthDate.getDay().toString().padStart(2, "0");
-    const month = birthDate.getMonth().toString().padStart(2, "0");
+    const month = (birthDate.getMonth() + 1).toString().padStart(2, "0");
     const year = birthDate.getFullYear().toString().slice(-2);
     const cipher = `${firstLetter}${day}${month}${year}`;
 
