@@ -47,8 +47,8 @@ function createSheet() {
   sheet.getRange("G1").setValue("Postleizahl");
   sheet.getRange("H1").setValue("Stadt");
   sheet.getRange("I1").setValue("Schiffre");
-  // Zugriff auf die Spalte "I" und Änderung des Formats
-  const columnI = sheet.getRange("I:I");
+  // Zugriff auf die Spalte "G" und Änderung des Formats
+  const columnI = sheet.getRange("G:G");
   columnI.setNumberFormat("@");
 
   ScriptApp.newTrigger("onOpen").forSpreadsheet(sheet).onOpen().create();
