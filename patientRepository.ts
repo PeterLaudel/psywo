@@ -32,14 +32,14 @@ export class Patients {
 }
 
 class PatientRepository {
-  private sheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
+  private spreadSheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
 
   constructor(sheet: GoogleAppsScript.Spreadsheet.Spreadsheet) {
-    this.sheet = sheet;
+    this.spreadSheet = sheet;
   }
 
   createPatient(patient: CreatePatient) {
-    const sheet = this.sheet.getSheetByName("Patienten");
+    const sheet = this.spreadSheet.getActiveSheet();
     const lastRow = sheet.getLastRow();
     const range = sheet.getRange(lastRow + 1, 1, 1, 9);
 
