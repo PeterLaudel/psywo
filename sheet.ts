@@ -51,6 +51,10 @@ function createSheet() {
   const columnI = sheet.getRange("G:G");
   columnI.setNumberFormat("@");
 
+  // Zugriff auf die Spalte "A" und Änderung des Formats
+  const columnA = sheet.getRange("A:A");
+  columnA.setNumberFormat("dd.mm.yyyy hh:mm:ss");
+
   ScriptApp.newTrigger("onOpen").forSpreadsheet(sheet).onOpen().create();
 
   return sheet;
