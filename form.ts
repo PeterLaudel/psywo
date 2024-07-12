@@ -62,19 +62,24 @@ function createForm() {
 }
 
 function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
-  const items = e.source.getItems();
-  const namedValues = items.reduce((acc, item) => {
-    const title = item.getTitle();
-    return (acc[title] = e.response.getResponseForItem(item).getResponse());
-  }, {});
+  const response = e.response;
+  const itemResponses = response.getItemResponses();
+
+  const lastName = itemResponses[0].getResponse().toString();
+  const firstName = itemResponses[1].getResponse().toString();
+  const birthdate = new Date(itemResponses[2].getResponse().toString());
+  const email = itemResponses[3].getResponse().toString();
+  const street = itemResponses[4].getResponse().toString();
+  const postalCode = itemResponses[5].getResponse().toString();
+  const city = itemResponses[6].getResponse().toString();
 
   Patients.repository().createPatient({
-    firstName: namedValues["Vorname"],
-    lastName: namedValues["Name"],
-    birthdate: new Date(namedValues["Geburtsdatum"]),
-    email: namedValues["Email"],
-    street: namedValues["Straße"],
-    postalCode: namedValues["Postleizahl"],
-    city: namedValues["Stadt"],
+    firstName,
+    lastName,
+    birthdate,
+    email,
+    street,
+    postalCode,
+    city,
   });
 }
