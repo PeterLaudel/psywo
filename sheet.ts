@@ -61,7 +61,7 @@ function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
 
 function showPatientForm() {
   const htmlOutput = HtmlService.createHtmlOutput(
-    `<iframe style="position: absolute; height: 100%; border: none" src="${PatientForm.form()}">Wird geladen...</iframe>`
+    `<iframe style="position: absolute; height: 100%; border: none" src="${PatientForm.form().getPublishedUrl()}">Wird geladen...</iframe>`
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);

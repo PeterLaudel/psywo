@@ -18,7 +18,7 @@ type CreatePatient = Pick<
 >;
 
 export class Patients {
-  static repostitory_: PatientRepository;
+  static repostitory_: PatientRepository | null = null;
 
   static repository(
     sheet: GoogleAppsScript.Spreadsheet.Spreadsheet = PatientSheet.sheet()
