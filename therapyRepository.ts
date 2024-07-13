@@ -1,8 +1,10 @@
 import { TherapyCalender } from "./calender";
 
+type TherapyType = "Einzeltherapie" | "Erstgespräch";
+
 interface Therapy {
   cipher: string;
-  type: "Einzeltherapie" | "Erstgespräch";
+  type: TherapyType;
 }
 
 class Therapies {
@@ -26,12 +28,12 @@ class TherapyRepository {
     this.calendar = calendar;
   }
 
-  getTherapies(startTime: Date, endTime: Date) {
+  getTherapies(startTime: Date, endTime: Date): Therapy[] {
     const events = this.calendar.getEvents(startTime, endTime);
     return events.map((event) => {
       const description = event.getDescription();
       const [cipher, type] = description.split(" - ");
-      return { cipher, type } as Therapy;
+      return { cipher, type: type as TherapyType };
     });
   }
 
