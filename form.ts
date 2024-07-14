@@ -62,24 +62,15 @@ function createForm() {
 }
 
 function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
-  const response = e.response;
-  const itemResponses = response.getItemResponses();
-
-  const lastName = itemResponses[0].getResponse().toString();
-  const firstName = itemResponses[1].getResponse().toString();
-  const birthdate = new Date(itemResponses[2].getResponse().toString());
-  const email = itemResponses[3].getResponse().toString();
-  const street = itemResponses[4].getResponse().toString();
-  const postalCode = itemResponses[5].getResponse().toString();
-  const city = itemResponses[6].getResponse().toString();
+  const itemResponses = e.response.getItemResponses();
 
   Patients.repository().addPatient({
-    firstName,
-    lastName,
-    birthdate,
-    email,
-    street,
-    postalCode,
-    city,
+    lastName: itemResponses[0].getResponse().toString(),
+    firstName: itemResponses[1].getResponse().toString(),
+    birthdate: new Date(itemResponses[2].getResponse().toString()),
+    email: itemResponses[3].getResponse().toString(),
+    street: itemResponses[4].getResponse().toString(),
+    postalCode: itemResponses[5].getResponse().toString(),
+    city: itemResponses[6].getResponse().toString(),
   });
 }
