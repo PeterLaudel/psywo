@@ -1,13 +1,5 @@
 export class Calenders {
-  static calendar_: GoogleAppsScript.Calendar.Calendar | null = null;
-
-  static calendar() {
-    if (Calenders.calendar_ === null) {
-      Calenders.calendar_ = createCalendar();
-    }
-
-    return Calenders.calendar_;
-  }
+  public static calendar = createCalendar();
 }
 
 function createCalendar() {

@@ -3,15 +3,7 @@ import { Invoices } from "../repositories/invoices";
 import { Patients } from "../repositories/patients";
 
 export class Sheets {
-  static sheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
-
-  static sheet() {
-    if (Sheets.sheet_ === null) {
-      Sheets.sheet_ = createSheet();
-    }
-
-    return Sheets.sheet_;
-  }
+  public static sheet = createSheet();
 }
 
 function findFileByName(
@@ -71,7 +63,7 @@ function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
 
 function showPatientForm() {
   const htmlOutput = HtmlService.createHtmlOutput(
-    `<iframe style="position: absolute; height: 100%; border: none" src="${Forms.createPatient().getPublishedUrl()}">Wird geladen...</iframe>`
+    `<iframe style="position: absolute; height: 100%; border: none" src="${Forms.createPatient.getPublishedUrl()}">Wird geladen...</iframe>`
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);

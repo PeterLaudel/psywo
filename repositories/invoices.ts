@@ -6,7 +6,7 @@ type InvoiceCreate = Pick<Invoice, "patient" | "positions">;
 export class Invoices {
   static repository_: InvoiceRepository | null = null;
 
-  static repository(folder: GoogleAppsScript.Drive.Folder = Folders.folder()) {
+  static repository(folder: GoogleAppsScript.Drive.Folder = Folders.invoices) {
     if (Invoices.repository_ === null) {
       Invoices.repository_ = new InvoiceRepository(folder);
     }

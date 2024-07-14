@@ -10,7 +10,7 @@ export class Patients {
   static repostitory_: PatientRepository | null = null;
 
   static repository(
-    sheet: GoogleAppsScript.Spreadsheet.Spreadsheet = Sheets.sheet()
+    sheet: GoogleAppsScript.Spreadsheet.Spreadsheet = Sheets.sheet
   ) {
     if (Patients.repostitory_ === null) {
       Patients.repostitory_ = new PatientRepository(sheet);

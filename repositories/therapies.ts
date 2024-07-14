@@ -6,7 +6,7 @@ export class Therapies {
   static repository_: TherapyRepository | null = null;
 
   static repository(
-    calendar: GoogleAppsScript.Calendar.Calendar = Calenders.calendar()
+    calendar: GoogleAppsScript.Calendar.Calendar = Calenders.calendar
   ) {
     if (Therapies.repository_ === null) {
       Therapies.repository_ = new TherapyRepository(calendar);

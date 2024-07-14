@@ -1,13 +1,5 @@
 export class Folders {
-  static folder_: GoogleAppsScript.Drive.Folder | null = null;
-
-  static folder() {
-    if (Folders.folder_ === null) {
-      Folders.folder_ = createFolder();
-    }
-
-    return Folders.folder_;
-  }
+  static invoices = createFolder();
 }
 
 function createFolder() {

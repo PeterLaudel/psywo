@@ -1,15 +1,7 @@
 import { Patients } from "../repositories/patients";
 
 export class Forms {
-  static createPatient_: GoogleAppsScript.Forms.Form | null = null;
-
-  static createPatient() {
-    if (Forms.createPatient_ === null) {
-      Forms.createPatient_ = createCreatePatientForm();
-    }
-
-    return Forms.createPatient_;
-  }
+  static createPatient = createCreatePatientForm();
 }
 
 function findFileByName(
