@@ -48,7 +48,7 @@ function createCreatePatientForm() {
 
   form.addTextItem().setTitle("Stadt").setRequired(true);
 
-  ScriptApp.newTrigger("onFormSubmit").forForm(form).onFormSubmit().create();
+  ScriptApp.newTrigger(onFormSubmit.name).forForm(form).onFormSubmit().create();
 
   return form;
 }
@@ -56,7 +56,7 @@ function createCreatePatientForm() {
 function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
   const itemResponses = e.response.getItemResponses();
 
-  Patients.repository().addPatient({
+  Patients.addPatient({
     lastName: itemResponses[0].getResponse().toString(),
     firstName: itemResponses[1].getResponse().toString(),
     birthdate: new Date(itemResponses[2].getResponse().toString()),

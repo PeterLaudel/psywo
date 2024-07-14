@@ -2,8 +2,8 @@ import { Invoices } from "../repositories/invoices";
 import { Patients } from "../repositories/patients";
 
 export function createInvoices() {
-  const patient = Patients.repository().getPatients()[0];
-  Invoices.repository().addInvoice({
+  const patient = Patients.getPatients()[0];
+  Invoices.addInvoice({
     patient,
     positions: [
       { description: "Therapie", amount: 1, price: 50 },
