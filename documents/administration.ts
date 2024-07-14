@@ -3,6 +3,7 @@ import { createInvoices } from "../services/createInvoices";
 
 export class Administration {
   public static patients = administrationSheet().getSheetByName("Patienten");
+  public static prices = administrationSheet().getSheetByName("Preise");
 }
 
 function findFileByName(
@@ -27,14 +28,17 @@ function administrationSheet() {
 
   const ss = SpreadsheetApp.create(fileName);
 
-  createSheet(ss);
+  createPatientsSheet(ss);
+  createPricesSheet(ss);
+
+  ss.deleteActiveSheet();
 
   ScriptApp.newTrigger(onOpen.name).forSpreadsheet(ss).onOpen().create();
 
   return ss;
 }
 
-function createSheet(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
+function createPatientsSheet(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
   const sheetName = "Patienten";
   if (ss.getSheetByName(sheetName)) return ss.getSheetByName(sheetName);
 
@@ -60,6 +64,26 @@ function createSheet(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
   // Zugriff auf die Spalte "A" und Änderung des Formats
   const columnA = sheet.getRange("A:A");
   columnA.setNumberFormat("dd.mm.yyyy hh:mm:ss");
+
+  return sheet;
+}
+
+function createPricesSheet(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
+  const sheetName = "Preise";
+  if (ss.getSheetByName(sheetName)) return ss.getSheetByName(sheetName);
+
+  const sheet = ss.insertSheet(sheetName);
+
+  sheet.setFrozenRows(1);
+  sheet.getRange("A1:D1").setFontWeight("bold");
+  sheet.getRange("A1:D1").setBackground("#f0f0f0");
+  sheet.getRange("A1").setValue("Erstellt am");
+  sheet.getRange("B1").setValue("Name");
+  sheet.getRange("C1").setValue("Kürzel");
+  sheet.getRange("D1").setValue("Preis");
+
+  sheet.getRange("A:A").setNumberFormat("dd.mm.yyyy hh:mm:ss");
+  sheet.getRange("D:D").setNumberFormat("0.00 €");
 
   return sheet;
 }
