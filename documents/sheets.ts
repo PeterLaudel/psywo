@@ -1,6 +1,5 @@
 import { Forms } from "./forms";
-import { Invoices } from "../repositories/invoices";
-import { Patients } from "../repositories/patients";
+import { createInvoices } from "../services/createInvoices";
 
 export class Sheets {
   public static sheet = createSheet();
@@ -56,8 +55,8 @@ function createSheet() {
 
 function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
   e.source.addMenu("Patienten", [
-    { name: "Patienten Anlegen", functionName: "showPatientForm" },
-    { name: "Rechnungen Erstellen", functionName: "createInvoices" },
+    { name: "Patienten Anlegen", functionName: showPatientForm.name },
+    { name: "Rechnungen Erstellen", functionName: createInvoices.name },
   ]);
 }
 
@@ -67,15 +66,4 @@ function showPatientForm() {
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
-}
-
-function createInvoices() {
-  const patient = Patients.repository().getPatients()[0];
-  Invoices.repository().addInvoice({
-    patient,
-    positions: [
-      { description: "Therapie", amount: 1, price: 50 },
-      { description: "Material", amount: 1, price: 20 },
-    ],
-  });
 }
