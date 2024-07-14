@@ -31,7 +31,7 @@ function administrationSheet() {
 
   ScriptApp.newTrigger(onOpen.name).forSpreadsheet(ss).onOpen().create();
 
-  return SpreadsheetApp.create(fileName);
+  return ss;
 }
 
 function createSheet(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
