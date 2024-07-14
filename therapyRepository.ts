@@ -1,4 +1,5 @@
 import { TherapyCalender } from "./calender";
+import { Patient } from "./patientRepository";
 
 type TherapyType = "Einzeltherapie" | "Erstgespräch";
 
@@ -37,8 +38,8 @@ class TherapyRepository {
     });
   }
 
-  getTerapiesForPatient(cipher: string, startTime: Date, endTime: Date) {
+  getTherapiesForPatient(patient: Patient, startTime: Date, endTime: Date) {
     const therapies = this.getTherapies(startTime, endTime);
-    return therapies.filter((therapy) => therapy.cipher === cipher);
+    return therapies.filter((therapy) => therapy.cipher === patient.shipCode);
   }
 }

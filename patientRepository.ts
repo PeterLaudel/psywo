@@ -1,6 +1,6 @@
 import { PatientSheet } from "./sheet";
 
-interface Patient {
+export interface Patient {
   createdAt: Date;
   firstName: string;
   lastName: string;

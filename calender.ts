@@ -15,6 +15,5 @@ function createCalendar() {
   const calendars = CalendarApp.getCalendarsByName(calendarName);
   if (calendars.length > 0) return calendars[0];
 
-  const newCalendar = CalendarApp.createCalendar(calendarName);
-  return newCalendar;
+  return CalendarApp.createCalendar(calendarName);
 }
