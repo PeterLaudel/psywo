@@ -1,27 +1,12 @@
-import { Patient } from "./patientRepository";
-import { InvoiceFolder } from "./folder";
-
-class Position {
-  description: string;
-  amount: number;
-  price: number;
-}
-
-class Invoice {
-  creationDate: Date;
-  patient: Patient;
-  positions: Position[];
-  link: string;
-}
+import { Invoice } from "../models/invoice";
+import { Folders } from "../documents/folders";
 
 type InvoiceCreate = Pick<Invoice, "patient" | "positions">;
 
 export class Invoices {
   static repository_: InvoiceRepository | null = null;
 
-  static repository(
-    folder: GoogleAppsScript.Drive.Folder = InvoiceFolder.folder()
-  ) {
+  static repository(folder: GoogleAppsScript.Drive.Folder = Folders.folder()) {
     if (Invoices.repository_ === null) {
       Invoices.repository_ = new InvoiceRepository(folder);
     }

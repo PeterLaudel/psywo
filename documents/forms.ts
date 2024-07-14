@@ -1,14 +1,14 @@
-import { Patients } from "./patientRepository";
+import { Patients } from "../repositories/patients";
 
-export class PatientForm {
-  static form_: GoogleAppsScript.Forms.Form | null = null;
+export class Forms {
+  static createPatient_: GoogleAppsScript.Forms.Form | null = null;
 
-  static form() {
-    if (PatientForm.form_ === null) {
-      PatientForm.form_ = createForm();
+  static createPatient() {
+    if (Forms.createPatient_ === null) {
+      Forms.createPatient_ = createCreatePatientForm();
     }
 
-    return PatientForm.form_;
+    return Forms.createPatient_;
   }
 }
 
@@ -25,7 +25,7 @@ function findFileByName(
   return null;
 }
 
-function createForm() {
+function createCreatePatientForm() {
   const fileName = "Patienten Anlegen";
   const files = DriveApp.getFilesByType(MimeType.GOOGLE_FORMS);
   const file = findFileByName(fileName, files);

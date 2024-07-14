@@ -1,18 +1,12 @@
-import { TherapyCalender } from "./calender";
-import { Patient } from "./patientRepository";
+import { Calenders } from "../documents/calenders";
+import { Patient } from "../models/patient";
+import { Therapy } from "../models/therapy";
 
-type TherapyType = "Einzeltherapie" | "Erstgespräch";
-
-interface Therapy {
-  cipher: string;
-  type: TherapyType;
-}
-
-class Therapies {
+export class Therapies {
   static repositroy_: TherapyRepository | null = null;
 
   static repository(
-    calendar: GoogleAppsScript.Calendar.Calendar = TherapyCalender.calendar()
+    calendar: GoogleAppsScript.Calendar.Calendar = Calenders.calendar()
   ) {
     if (Therapies.repositroy_ === null) {
       Therapies.repositroy_ = new TherapyRepository(calendar);
@@ -34,7 +28,7 @@ class TherapyRepository {
     return events.map((event) => {
       const description = event.getDescription();
       const [cipher, type] = description.split(" - ");
-      return { cipher, type: type as TherapyType };
+      return { cipher, type };
     });
   }
 

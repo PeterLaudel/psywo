@@ -1,16 +1,5 @@
-import { PatientSheet } from "./sheet";
-
-export interface Patient {
-  createdAt: Date;
-  firstName: string;
-  lastName: string;
-  birthdate: Date;
-  email: string;
-  street: string;
-  postalCode: string;
-  city: string;
-  shipCode: string;
-}
+import { Sheets } from "../documents/sheets";
+import { Patient } from "../models/patient";
 
 type CreatePatient = Pick<
   Patient,
@@ -21,7 +10,7 @@ export class Patients {
   static repostitory_: PatientRepository | null = null;
 
   static repository(
-    sheet: GoogleAppsScript.Spreadsheet.Spreadsheet = PatientSheet.sheet()
+    sheet: GoogleAppsScript.Spreadsheet.Spreadsheet = Sheets.sheet()
   ) {
     if (Patients.repostitory_ === null) {
       Patients.repostitory_ = new PatientRepository(sheet);

@@ -1,12 +1,12 @@
-export class TherapyCalender {
+export class Calenders {
   static calendar_: GoogleAppsScript.Calendar.Calendar | null = null;
 
   static calendar() {
-    if (TherapyCalender.calendar_ === null) {
-      TherapyCalender.calendar_ = createCalendar();
+    if (Calenders.calendar_ === null) {
+      Calenders.calendar_ = createCalendar();
     }
 
-    return TherapyCalender.calendar_;
+    return Calenders.calendar_;
   }
 }
 

@@ -1,16 +1,16 @@
-import { PatientForm } from "./form";
-import { Invoices } from "./invoiceRepository";
-import { Patients } from "./patientRepository";
+import { Forms } from "./forms";
+import { Invoices } from "../repositories/invoices";
+import { Patients } from "../repositories/patients";
 
-export class PatientSheet {
+export class Sheets {
   static sheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
 
   static sheet() {
-    if (PatientSheet.sheet_ === null) {
-      PatientSheet.sheet_ = createSheet();
+    if (Sheets.sheet_ === null) {
+      Sheets.sheet_ = createSheet();
     }
 
-    return PatientSheet.sheet_;
+    return Sheets.sheet_;
   }
 }
 
@@ -71,7 +71,7 @@ function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
 
 function showPatientForm() {
   const htmlOutput = HtmlService.createHtmlOutput(
-    `<iframe style="position: absolute; height: 100%; border: none" src="${PatientForm.form().getPublishedUrl()}">Wird geladen...</iframe>`
+    `<iframe style="position: absolute; height: 100%; border: none" src="${Forms.createPatient().getPublishedUrl()}">Wird geladen...</iframe>`
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
