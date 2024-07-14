@@ -48,7 +48,7 @@ function createSheet() {
   const columnA = sheet.getRange("A:A");
   columnA.setNumberFormat("dd.mm.yyyy hh:mm:ss");
 
-  ScriptApp.newTrigger("onOpen").forSpreadsheet(sheet).onOpen().create();
+  ScriptApp.newTrigger(onOpen.name).forSpreadsheet(sheet).onOpen().create();
 
   return sheet;
 }

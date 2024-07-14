@@ -24,7 +24,7 @@ class InvoiceRepository {
 
   addInvoice(invoice: InvoiceCreate): Invoice {
     const fileCopy = DriveApp.getFileById(
-      "1pnAu7waOR2fWg8Bph9z-pZETlkyZEHsIYXqDTYZMxXI"
+      "1h4r4SJJc2VZu8iqYwn4IheMG98S6kkcyuNEd3biFOEA"
     ).makeCopy("Rechnung 1", this.folder);
 
     const newSpreadsheet = SpreadsheetApp.openById(fileCopy.getId());
