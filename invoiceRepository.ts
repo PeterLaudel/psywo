@@ -1,4 +1,5 @@
 import { Patient } from "./patientRepository";
+import { InvoiceFolder } from "./folder";
 
 class Position {
   description: string;
@@ -15,10 +16,12 @@ class Invoice {
 
 type InvoiceCreate = Pick<Invoice, "patient" | "positions">;
 
-class Invoices {
+export class Invoices {
   static repository_: InvoiceRepository | null = null;
 
-  static repository(folder: GoogleAppsScript.Drive.Folder) {
+  static repository(
+    folder: GoogleAppsScript.Drive.Folder = InvoiceFolder.folder()
+  ) {
     if (Invoices.repository_ === null) {
       Invoices.repository_ = new InvoiceRepository(folder);
     }

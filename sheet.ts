@@ -1,4 +1,6 @@
 import { PatientForm } from "./form";
+import { Invoices } from "./invoiceRepository";
+import { Patients } from "./patientRepository";
 
 export class PatientSheet {
   static sheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
@@ -63,6 +65,7 @@ function createSheet() {
 function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
   e.source.addMenu("Patienten", [
     { name: "Patienten Anlegen", functionName: "showPatientForm" },
+    { name: "Rechnungen Erstellen", functionName: "createInvoices" },
   ]);
 }
 
@@ -72,4 +75,15 @@ function showPatientForm() {
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
+}
+
+function createInvoices() {
+  const patient = Patients.repository().getPatients()[0];
+  const repository = Invoices.repository().addInvoice({
+    patient,
+    positions: [
+      { description: "Therapie", amount: 1, price: 50 },
+      { description: "Material", amount: 1, price: 20 },
+    ],
+  });
 }
