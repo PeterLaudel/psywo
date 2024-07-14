@@ -1,5 +1,5 @@
-import { PatientsSheet } from "./patientsSheet";
+import { createSheet } from "./patientsSheet";
 
 export class Sheets {
-  public static sheet = PatientsSheet.createSheet();
+  public static sheet = createSheet();
 }

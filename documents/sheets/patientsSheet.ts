@@ -1,12 +1,6 @@
 import { Forms } from "../forms";
 import { createInvoices } from "../../services/createInvoices";
 
-export class PatientsSheet {
-  static createSheet() {
-    return createSheet();
-  }
-}
-
 function findFileByName(
   fileName: string,
   files: GoogleAppsScript.Drive.FileIterator
@@ -20,7 +14,7 @@ function findFileByName(
   return null;
 }
 
-function createSheet() {
+export function createSheet() {
   const fileName = "Patienten";
 
   const files = DriveApp.getFilesByType(MimeType.GOOGLE_SHEETS);
