@@ -1,4 +1,4 @@
-import { Invoice } from "../models/invoice";
+import type { Invoice } from "../models/invoice";
 import { Folders } from "../documents/folders";
 
 type InvoiceCreate = Pick<Invoice, "patient" | "positions">;

@@ -1,5 +1,5 @@
 import { Sheets } from "../documents/sheets";
-import { Patient } from "../models/patient";
+import type { Patient } from "../models/patient";
 
 type CreatePatient = Pick<
   Patient,
