@@ -79,7 +79,7 @@ function showPatientForm() {
 
 function createInvoices() {
   const patient = Patients.repository().getPatients()[0];
-  const repository = Invoices.repository().addInvoice({
+  Invoices.repository().addInvoice({
     patient,
     positions: [
       { description: "Therapie", amount: 1, price: 50 },
