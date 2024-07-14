@@ -3,16 +3,16 @@ import { Patient } from "../models/patient";
 import { Therapy } from "../models/therapy";
 
 export class Therapies {
-  static repositroy_: TherapyRepository | null = null;
+  static repository_: TherapyRepository | null = null;
 
   static repository(
     calendar: GoogleAppsScript.Calendar.Calendar = Calenders.calendar()
   ) {
-    if (Therapies.repositroy_ === null) {
-      Therapies.repositroy_ = new TherapyRepository(calendar);
+    if (Therapies.repository_ === null) {
+      Therapies.repository_ = new TherapyRepository(calendar);
     }
 
-    return Therapies.repositroy_;
+    return Therapies.repository_;
   }
 }
 
