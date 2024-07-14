@@ -1,5 +1,9 @@
-import { Forms } from "../forms";
-import { createInvoices } from "../../services/createInvoices";
+import { Forms } from "./forms";
+import { createInvoices } from "../services/createInvoices";
+
+export class Administration {
+  public static patients = administrationSheet().getSheetByName("Patienten");
+}
 
 function findFileByName(
   fileName: string,
@@ -14,14 +18,27 @@ function findFileByName(
   return null;
 }
 
-export function createSheet() {
-  const fileName = "Patienten";
+function administrationSheet() {
+  const fileName = "Administration";
 
   const files = DriveApp.getFilesByType(MimeType.GOOGLE_SHEETS);
   const file = findFileByName(fileName, files);
   if (file !== null) return SpreadsheetApp.openById(file.getId());
 
-  const sheet = SpreadsheetApp.create(fileName);
+  const ss = SpreadsheetApp.create(fileName);
+
+  createSheet(ss);
+
+  ScriptApp.newTrigger(onOpen.name).forSpreadsheet(ss).onOpen().create();
+
+  return SpreadsheetApp.create(fileName);
+}
+
+function createSheet(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
+  const sheetName = "Patienten";
+  if (ss.getSheetByName(sheetName)) return ss.getSheetByName(sheetName);
+
+  const sheet = ss.insertSheet(sheetName);
 
   sheet.setFrozenRows(1);
   sheet.getRange("A1:I1").setFontWeight("bold");
@@ -43,8 +60,6 @@ export function createSheet() {
   // Zugriff auf die Spalte "A" und Änderung des Formats
   const columnA = sheet.getRange("A:A");
   columnA.setNumberFormat("dd.mm.yyyy hh:mm:ss");
-
-  ScriptApp.newTrigger(onOpen.name).forSpreadsheet(sheet).onOpen().create();
 
   return sheet;
 }

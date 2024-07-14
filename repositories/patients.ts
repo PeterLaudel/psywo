@@ -1,4 +1,4 @@
-import { Sheets } from "../documents/sheets";
+import { Administration } from "../documents/administration";
 import type { Patient } from "../models/patient";
 
 type CreatePatient = Pick<
@@ -11,7 +11,7 @@ export class Patients {
 
   private static repository() {
     if (Patients.repostitory_ === null) {
-      Patients.repostitory_ = new PatientRepository(Sheets.sheet);
+      Patients.repostitory_ = new PatientRepository(Administration.patients);
     }
 
     return Patients.repostitory_;
@@ -27,16 +27,15 @@ export class Patients {
 }
 
 class PatientRepository {
-  private spreadSheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
+  private sheet: GoogleAppsScript.Spreadsheet.Sheet;
 
-  constructor(sheet: GoogleAppsScript.Spreadsheet.Spreadsheet) {
-    this.spreadSheet = sheet;
+  constructor(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+    this.sheet = sheet;
   }
 
   addPatient(patient: CreatePatient) {
-    const sheet = this.spreadSheet.getActiveSheet();
-    const lastRow = sheet.getLastRow();
-    const range = sheet.getRange(lastRow + 1, 1, 1, 9);
+    const lastRow = this.sheet.getLastRow();
+    const range = this.sheet.getRange(lastRow + 1, 1, 1, 9);
 
     const firstLetter = patient.lastName.charAt(0);
     const birthDate = patient.birthdate;
@@ -60,8 +59,7 @@ class PatientRepository {
   }
 
   getPatients() {
-    const sheet = this.spreadSheet.getActiveSheet();
-    const rows = sheet.getDataRange().getValues();
+    const rows = this.sheet.getDataRange().getValues();
     return rows
       .slice(1)
       .map(
