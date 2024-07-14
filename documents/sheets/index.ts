@@ -1,5 +1,5 @@
-import { Forms } from "./forms";
-import { createInvoices } from "../services/createInvoices";
+import { Forms } from "../forms";
+import { createInvoices } from "../../services/createInvoices";
 
 export class Sheets {
   public static sheet = createSheet();
