@@ -1,5 +1,5 @@
-import { Administration } from "./documents/administration";
+import { createView } from "./views/patients";
 
 function createEnvironment() {
-  Administration.patients;
+  createView();
 }
