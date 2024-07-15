@@ -1,7 +1,7 @@
 import { Forms } from "../documents/forms";
 import { Patients } from "../repositories/patients";
 
-export function createView() {
+function createView() {
   ScriptApp.newTrigger(onFormSubmit.name)
     .forForm(Forms.createPatient)
     .onFormSubmit()
@@ -21,3 +21,5 @@ function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
     city: itemResponses[6].getResponse().toString(),
   });
 }
+
+export { createView };

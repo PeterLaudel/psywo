@@ -2,7 +2,7 @@ import { Forms } from "../documents/forms";
 import { Administration } from "../documents/administration";
 import { createInvoices } from "../services/createInvoices";
 
-export function createView() {
+function createView() {
   ScriptApp.newTrigger(onOpen.name)
     .forSpreadsheet(Administration.spreadsheet)
     .onOpen()
@@ -23,3 +23,5 @@ function showPatientForm() {
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
 }
+
+export { createView };
