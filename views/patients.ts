@@ -2,11 +2,13 @@ import { Forms } from "../documents/forms";
 import { Administration } from "../documents/administration";
 import { createInvoices } from "../services/createInvoices";
 
-function createView() {
-  ScriptApp.newTrigger(onOpen.name)
-    .forSpreadsheet(Administration.spreadsheet)
-    .onOpen()
-    .create();
+export class Test {
+  static createView() {
+    ScriptApp.newTrigger(onOpen.name)
+      .forSpreadsheet(Administration.spreadsheet)
+      .onOpen()
+      .create();
+  }
 }
 
 function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
@@ -23,5 +25,3 @@ function showPatientForm() {
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
 }
-
-export { createView };

@@ -1,5 +1,5 @@
-import { createView } from "./views/patients";
+import { Test } from "./views/patients";
 
 function createEnvironment() {
-  createView();
+  Test.createView();
 }
