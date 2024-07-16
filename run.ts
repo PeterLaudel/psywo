@@ -1,6 +1,7 @@
 import Migration0001 from "./migration/0001_administration_spreadsheet";
 import Migration0002 from "./migration/0002_patients_sheet";
 import Migration0003 from "./migration/0003_prices_sheet";
+import Migration0004 from "./migration/0004_create_patient_form";
 
 import AdministrationMenu from "./triggers/administration_menu";
 import CreatePatientForm from "./triggers/create_patient_form";
@@ -9,6 +10,7 @@ function run() {
   migrate(new Migration0001());
   migrate(new Migration0002());
   migrate(new Migration0003());
+  migrate(new Migration0004());
 
   installTriggers([new AdministrationMenu(), new CreatePatientForm()]);
 }

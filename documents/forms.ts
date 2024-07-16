@@ -4,7 +4,7 @@ export class Forms {
   public static get createPatient() {
     if (Forms.createPatientForm_ === null) {
       const id = PropertiesService.getUserProperties().getProperty(
-        "CREATE_PATIENT_FORM_ID"
+        "PATIENT_FORM_ID"
       );
       Forms.createPatientForm_ = FormApp.openById(id);
     }
