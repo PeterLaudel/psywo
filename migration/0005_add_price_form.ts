@@ -7,7 +7,7 @@ export default class Migration0005 {
 
     const priceValidation = FormApp.createTextValidation()
       .setHelpText("Bitte geben Sie einen gültigen Preis in Euro ein.")
-      .requireTextMatchesPattern("^\\d+(\\.\\d{2})?$")
+      .requireTextMatchesPattern("^\\d+(\\,\\d{2})?$")
       .build();
 
     let abbreviationValidation = FormApp.createTextValidation()
