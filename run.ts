@@ -6,6 +6,7 @@ import Migration0005 from "./migration/0005_add_price_form";
 
 import AdministrationMenu from "./triggers/administration_menu";
 import CreatePatientForm from "./triggers/create_patient_form";
+import CreatePriceForm from "./triggers/create_price_form";
 
 function run() {
   migrate(new Migration0001());
@@ -14,7 +15,11 @@ function run() {
   migrate(new Migration0004());
   migrate(new Migration0005());
 
-  installTriggers([new AdministrationMenu(), new CreatePatientForm()]);
+  installTriggers([
+    new AdministrationMenu(),
+    new CreatePatientForm(),
+    new CreatePriceForm(),
+  ]);
 }
 
 interface Migration {
