@@ -6,7 +6,7 @@ interface Migration {
   up(): void;
 }
 
-function test() {
+function run() {
   migrate(new Migration0001());
   migrate(new Migration0002());
   migrate(new Migration0003());
@@ -16,9 +16,12 @@ function migrate(migration: Migration) {
   const version = currentVersion();
   const newVersion = determineVersion(migration);
 
-  if (version <= newVersion) return;
+  if (version >= newVersion) {
+    return;
+  }
 
   migration.up();
+  ScriptProperties.setProperty("MIGRATION_VERSION", newVersion.toString());
 }
 
 function determineVersion(migration: Migration) {
