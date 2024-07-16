@@ -28,10 +28,5 @@ export default class Migration0002 {
     // Zugriff auf die Spalte "A" und Änderung des Formats
     const columnA = sheet.getRange("A:A");
     columnA.setNumberFormat("dd.mm.yyyy hh:mm:ss");
-
-    PropertiesService.getUserProperties().setProperty(
-      "PATIENTS_SHEET_ID",
-      sheet.getSheetId().toString()
-    );
   }
 }

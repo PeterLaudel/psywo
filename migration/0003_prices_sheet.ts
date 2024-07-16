@@ -19,10 +19,5 @@ export default class Migration0003 {
 
     sheet.getRange("A:A").setNumberFormat("dd.mm.yyyy hh:mm:ss");
     sheet.getRange("D:D").setNumberFormat("0.00 €");
-
-    PropertiesService.getUserProperties().setProperty(
-      "PRICES_SHEET_ID",
-      sheet.getSheetId().toString()
-    );
   }
 }
