@@ -3,14 +3,14 @@ import { Patients } from "../repositories/patients";
 
 export default class CreatePatientForm {
   install() {
-    ScriptApp.newTrigger(onFormSubmit.name)
+    ScriptApp.newTrigger(onCreatePatient.name)
       .forForm(Forms.createPatient)
       .onFormSubmit()
       .create();
   }
 }
 
-function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
+function onCreatePatient(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
   const itemResponses = e.response.getItemResponses();
 
   Patients.addPatient({

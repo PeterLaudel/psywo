@@ -3,14 +3,14 @@ import { Prices } from "../repositories/prices";
 
 export default class CreatePriceForm {
   install() {
-    ScriptApp.newTrigger(onFormSubmit.name)
+    ScriptApp.newTrigger(onCreatePrice.name)
       .forForm(Forms.createPrice)
       .onFormSubmit()
       .create();
   }
 }
 
-function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
+function onCreatePrice(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
   const itemResponses = e.response.getItemResponses();
 
   Prices.addPrice({
