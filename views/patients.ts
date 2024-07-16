@@ -2,8 +2,8 @@ import { Forms } from "../documents/forms";
 import { Administration } from "../documents/administration";
 import { createInvoices } from "../services/createInvoices";
 
-export class Test {
-  static createView() {
+export class PatientsView {
+  static create() {
     ScriptApp.newTrigger(onOpen.name)
       .forSpreadsheet(Administration.spreadsheet)
       .onOpen()
