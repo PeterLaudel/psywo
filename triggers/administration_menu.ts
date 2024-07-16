@@ -12,8 +12,9 @@ export default class AdministrationMenu {
 }
 
 function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
-  e.source.addMenu("Patienten", [
+  e.source.addMenu("Administration", [
     { name: "Patienten Anlegen", functionName: showPatientForm.name },
+    { name: "Preis Anlegen", functionName: showPriceForm.name },
     { name: "Rechnungen Erstellen", functionName: createInvoices.name },
   ]);
 }
@@ -21,6 +22,14 @@ function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {
 function showPatientForm() {
   const htmlOutput = HtmlService.createHtmlOutput(
     `<iframe style="position: absolute; height: 100%; border: none" src="${Forms.createPatient.getPublishedUrl()}">Wird geladen...</iframe>`
+  );
+
+  SpreadsheetApp.getUi().showSidebar(htmlOutput);
+}
+
+function showPriceForm() {
+  const htmlOutput = HtmlService.createHtmlOutput(
+    `<iframe style="position: absolute; height: 100%; border: none" src="${Forms.createPrice.getPublishedUrl()}">Wird geladen...</iframe>`
   );
 
   SpreadsheetApp.getUi().showSidebar(htmlOutput);
