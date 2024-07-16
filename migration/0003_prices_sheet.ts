@@ -1,4 +1,4 @@
-export class Migration {
+export default class Migration0003 {
   static up() {
     const id = PropertiesService.getUserProperties().getProperty(
       "ADMINISTRATION_SPREADSHEET_ID"

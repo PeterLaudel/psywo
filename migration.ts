@@ -1,12 +1,17 @@
-import * as Migration0001 from "./migration/0001_administration_spreadsheet";
-import * as Migration0002 from "./migration/0002_patients_sheet";
-import * as Migration0003 from "./migration/0003_prices_sheet";
+import Migration0001 from "./migration/0001_administration_spreadsheet";
+import Migration0002 from "./migration/0002_patients_sheet";
+import Migration0003 from "./migration/0003_prices_sheet";
 
-function migrate(some: object) {
+interface Migration {
+  up(): void;
+}
+
+function fun(some: Migration) {
   const name = some.constructor.name;
-  some.Migration.up();
+  console.log(`Migrating ${name}`);
+  some.up();
 }
 
 function test() {
-  migrate(Migration0001);
+  fun(new Migration0001());
 }

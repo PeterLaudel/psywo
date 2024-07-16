@@ -1,11 +1,13 @@
-const administrationSheetId = PropertiesService.getUserProperties().getProperty(
-  "ADMINISTRATION_SPREADSHEET_ID"
-);
-
 export class Administration {
-  public static spreadsheet = SpreadsheetApp.openById(administrationSheetId);
-  public static patients = Administration.spreadsheet.getSheetByName(
-    "Patienten"
-  );
-  public static prices = Administration.spreadsheet.getSheetByName("Preise");
+  private static spreadsheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
+
+  public static get spreadsheet() {
+    if (Administration.spreadsheet_ === null) {
+      const id = PropertiesService.getUserProperties().getProperty(
+        "ADMINISTRATION_SPREADSHEET_ID"
+      );
+      Administration.spreadsheet_ = SpreadsheetApp.openById(id);
+    }
+    return Administration.spreadsheet_;
+  }
 }
