@@ -1,11 +1,13 @@
 import { Forms } from "../documents/forms";
 import { Patients } from "../repositories/patients";
 
-function createView() {
-  ScriptApp.newTrigger(onFormSubmit.name)
-    .forForm(Forms.createPatient)
-    .onFormSubmit()
-    .create();
+export default class CreatePatientForm {
+  install() {
+    ScriptApp.newTrigger(onFormSubmit.name)
+      .forForm(Forms.createPatient)
+      .onFormSubmit()
+      .create();
+  }
 }
 
 function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
@@ -21,5 +23,3 @@ function onFormSubmit(e: GoogleAppsScript.Events.FormsOnFormSubmit) {
     city: itemResponses[6].getResponse().toString(),
   });
 }
-
-export { createView };

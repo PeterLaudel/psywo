@@ -1,9 +1,9 @@
-import { Forms } from "../documents/forms";
 import { Administration } from "../documents/administration";
+import { Forms } from "../documents/forms";
 import { createInvoices } from "../services/createInvoices";
 
-export class PatientsView {
-  static create() {
+export default class AdministrationMenu {
+  install() {
     ScriptApp.newTrigger(onOpen.name)
       .forSpreadsheet(Administration.spreadsheet)
       .onOpen()

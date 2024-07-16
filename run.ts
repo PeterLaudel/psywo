@@ -2,14 +2,19 @@ import Migration0001 from "./migration/0001_administration_spreadsheet";
 import Migration0002 from "./migration/0002_patients_sheet";
 import Migration0003 from "./migration/0003_prices_sheet";
 
-interface Migration {
-  up(): void;
-}
+import AdministrationMenu from "./triggers/administration_menu";
+import CreatePatientForm from "./triggers/create_patient_form";
 
 function run() {
   migrate(new Migration0001());
   migrate(new Migration0002());
   migrate(new Migration0003());
+
+  installTriggers([new AdministrationMenu(), new CreatePatientForm()]);
+}
+
+interface Migration {
+  up(): void;
 }
 
 function migrate(migration: Migration) {
@@ -21,7 +26,10 @@ function migrate(migration: Migration) {
   }
 
   migration.up();
-  ScriptProperties.setProperty("MIGRATION_VERSION", newVersion.toString());
+  PropertiesService.getUserProperties().setProperty(
+    "MIGRATION_VERSION",
+    newVersion.toString()
+  );
 }
 
 function determineVersion(migration: Migration) {
@@ -36,4 +44,15 @@ function currentVersion() {
     "MIGRATION_VERSION"
   );
   return currentVersion === null ? 0 : parseInt(currentVersion, 10);
+}
+
+interface Trigger {
+  install(): void;
+}
+
+function installTriggers(triggers: Trigger[]) {
+  const installedTriggers = ScriptApp.getProjectTriggers();
+  installedTriggers.forEach((trigger) => ScriptApp.deleteTrigger(trigger));
+
+  triggers.forEach((trigger) => trigger.install());
 }
