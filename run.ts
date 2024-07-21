@@ -9,11 +9,13 @@ import CreatePatientForm from "./triggers/create_patient_form";
 import CreatePriceForm from "./triggers/create_price_form";
 
 function run() {
-  migrate(new Migration0001());
-  migrate(new Migration0002());
-  migrate(new Migration0003());
-  migrate(new Migration0004());
-  migrate(new Migration0005());
+  migrate([
+    new Migration0001(),
+    new Migration0002(),
+    new Migration0003(),
+    new Migration0004(),
+    new Migration0005(),
+  ]);
 
   installTriggers([
     new AdministrationMenu(),
@@ -26,18 +28,21 @@ interface Migration {
   up(): void;
 }
 
-function migrate(migration: Migration) {
-  const version = currentVersion();
-  const newVersion = determineVersion(migration);
+function migrate(migrations: Migration[]) {
+  migrations.forEach((migration) => migrateOne(migration));
+}
 
-  if (version >= newVersion) {
+function migrateOne(migration: Migration) {
+  const version = determineVersion(migration);
+  const current = currentVersion();
+  if (version <= current) {
     return;
   }
 
   migration.up();
   PropertiesService.getUserProperties().setProperty(
     "MIGRATION_VERSION",
-    newVersion.toString()
+    version.toString()
   );
 }
 
