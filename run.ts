@@ -3,6 +3,8 @@ import Migration0002 from "./migration/0002_patients_sheet";
 import Migration0003 from "./migration/0003_prices_sheet";
 import Migration0004 from "./migration/0004_create_patient_form";
 import Migration0005 from "./migration/0005_add_price_form";
+import Migration0006 from "./migration/0006_remove_patients_sheet";
+import Migration0007 from "./migration/0007_add_patient_contact_group";
 
 import AdministrationMenu from "./triggers/administration_menu";
 import CreatePatientForm from "./triggers/create_patient_form";
@@ -15,6 +17,8 @@ function run() {
     new Migration0003(),
     new Migration0004(),
     new Migration0005(),
+    new Migration0006(),
+    new Migration0007(),
   ]);
 
   installTriggers([

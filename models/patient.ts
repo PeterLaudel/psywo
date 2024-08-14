@@ -1,5 +1,4 @@
 export interface Patient {
-  createdAt: Date;
   firstName: string;
   lastName: string;
   birthdate: Date;
@@ -7,5 +6,4 @@ export interface Patient {
   street: string;
   postalCode: string;
   city: string;
-  cipher: string;
 }
