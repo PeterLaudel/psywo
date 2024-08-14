@@ -3,7 +3,7 @@ import type { Patient } from "../models/patient";
 
 type CreatePatient = Pick<
   Patient,
-  Exclude<keyof Patient, "createdAt" | "shipCode">
+  Exclude<keyof Patient, "createdAt" | "cipher">
 >;
 
 export class Patients {
@@ -33,7 +33,7 @@ class PatientRepository {
     this.sheet = sheet;
   }
 
-  addPatient(patient: CreatePatient) {
+  addPatient(patient: CreatePatient): Patient {
     const lastRow = this.sheet.getLastRow();
     const range = this.sheet.getRange(lastRow + 1, 1, 1, 9);
 
@@ -43,9 +43,10 @@ class PatientRepository {
     const month = (birthDate.getMonth() + 1).toString().padStart(2, "0");
     const year = birthDate.getFullYear().toString().slice(-2);
     const cipher = `${firstLetter}${day}${month}${year}`;
+    const createdAt = new Date();
 
     const values = [
-      new Date(),
+      createdAt,
       patient.firstName,
       patient.lastName,
       patient.birthdate,
@@ -56,6 +57,11 @@ class PatientRepository {
       cipher,
     ];
     range.setValues([values]);
+    return {
+      createdAt,
+      cipher,
+      ...patient,
+    };
   }
 
   getPatients() {

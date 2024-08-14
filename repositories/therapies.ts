@@ -38,6 +38,6 @@ class TherapyRepository {
 
   getTherapiesForPatient(patient: Patient, startTime: Date, endTime: Date) {
     const therapies = this.getTherapies(startTime, endTime);
-    return therapies.filter((therapy) => therapy.cipher === patient.shipCode);
+    return therapies.filter((therapy) => therapy.cipher === patient.cipher);
   }
 }

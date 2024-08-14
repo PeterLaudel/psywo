@@ -7,5 +7,5 @@ export interface Patient {
   street: string;
   postalCode: string;
   city: string;
-  shipCode: string;
+  cipher: string;
 }
