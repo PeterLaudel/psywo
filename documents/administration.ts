@@ -13,15 +13,6 @@ export class Administration {
     return Administration.spreadsheet_;
   }
 
-  public static get patients() {
-    if (Administration.patientsSheet_ === null) {
-      Administration.patientsSheet_ = Administration.spreadsheet.getSheetByName(
-        "Patienten"
-      );
-    }
-    return Administration.patientsSheet_;
-  }
-
   public static get prices() {
     if (Administration.pricesSheet_ === null) {
       Administration.pricesSheet_ = Administration.spreadsheet.getSheetByName(
