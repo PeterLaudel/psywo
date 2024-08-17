@@ -1,8 +1,9 @@
 import { Invoice } from "./invoice";
+import { Patient } from "./patient";
 
 export interface Therapy {
   id: string;
   title: string;
-  patientEmail: string;
+  patient: Patient;
   invoice?: Invoice;
 }

@@ -85,24 +85,45 @@ class PatientRepository {
   }
 
   getPatients() {
-    const contacts = People.People.getBatchGet({
-      resourceNames: this.patientContactGroup.memberResourceNames,
+    // Holen Sie die Kontakte für diese Ressourcennamen
+    const contactsResponse = People.People.getBatchGet({
+      resourceNames: this.memberResourceNames,
+      personFields: "resourceName,names,emailAddresses,addresses,birthdays",
     });
-    return contacts.responses.map(({ person }) => this.personToPatient(person));
+    return contactsResponse.responses.map(({ person }) =>
+      this.personToPatient(person)
+    );
   }
 
   getPatient(email: string): Patient {
-    const contacts = People.People.getBatchGet({
+    const contactsResponse = People.People.getBatchGet({
       resourceName: this.patientContactGroup.memberResourceNames,
-      emailAddresses: [email],
+      personFields: "emailAddresses",
     });
-    return this.personToPatient(contacts.responses[0].person);
+
+    const contact = contactsResponse.responses.find(
+      (response) => response.person.emailAddresses[0].value === email
+    );
+
+    const person = People.People.get(contact.person.resourceName, {
+      personFields: "resourceName,names,emailAddresses,addresses,birthdays",
+    });
+
+    return this.personToPatient(person);
+  }
+
+  private get memberResourceNames() {
+    const groupResponse = People.ContactGroups.get(
+      this.patientContactGroup.resourceName
+    );
+    return groupResponse.memberResourceNames || [];
   }
 
   private personToPatient(
     person: GoogleAppsScript.People.Schema.Person
   ): Patient {
     return {
+      id: person.resourceName,
       firstName: person.names[0].givenName,
       lastName: person.names[0].familyName,
       email: person.emailAddresses[0].value,
