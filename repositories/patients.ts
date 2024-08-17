@@ -21,6 +21,10 @@ export class Patients {
     return Patients.repository().getPatients();
   }
 
+  static getPatient(email: string) {
+    return Patients.repository().getPatient(email);
+  }
+
   static addPatient(patient: CreatePatient) {
     return Patients.repository().addPatient(patient);
   }
@@ -84,22 +88,33 @@ class PatientRepository {
     const contacts = People.People.getBatchGet({
       resourceNames: this.patientContactGroup.memberResourceNames,
     });
+    return contacts.responses.map(({ person }) => this.personToPatient(person));
+  }
 
-    return contacts.responses.map(({ person }) => {
-      return {
-        firstName: person.names[0].givenName,
-        lastName: person.names[0].familyName,
-        email: person.emailAddresses[0].value,
-        street: person.addresses[0].streetAddress,
-        postalCode: person.addresses[0].postalCode,
-        city: person.addresses[0].city,
-        birthdate: new Date(
-          person.birthdays[0].date.year,
-          person.birthdays[0].date.month - 1,
-          person.birthdays[0].date.day
-        ),
-      };
+  getPatient(email: string): Patient {
+    const contacts = People.People.getBatchGet({
+      resourceName: this.patientContactGroup.memberResourceNames,
+      emailAddresses: [email],
     });
+    return this.personToPatient(contacts.responses[0].person);
+  }
+
+  private personToPatient(
+    person: GoogleAppsScript.People.Schema.Person
+  ): Patient {
+    return {
+      firstName: person.names[0].givenName,
+      lastName: person.names[0].familyName,
+      email: person.emailAddresses[0].value,
+      street: person.addresses[0].streetAddress,
+      postalCode: person.addresses[0].postalCode,
+      city: person.addresses[0].city,
+      birthdate: new Date(
+        person.birthdays[0].date.year,
+        person.birthdays[0].date.month - 1,
+        person.birthdays[0].date.day
+      ),
+    };
   }
 
   private get patientContactGroup() {

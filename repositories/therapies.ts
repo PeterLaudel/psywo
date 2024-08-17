@@ -1,5 +1,4 @@
 import { Calenders } from "../documents/calenders";
-import { Patient } from "../models/patient";
 import { Therapy } from "../models/therapy";
 
 export class Therapies {
@@ -15,8 +14,15 @@ export class Therapies {
     return Therapies.repository_;
   }
 
-  static getTherapies(startTime: Date, endTime: Date) {
-    return Therapies.repository().getTherapies(startTime, endTime);
+  static getTherapies() {
+    return Therapies.repository().getTherapies();
+  }
+
+  static updateTherapy(
+    id: string,
+    therapy: Required<Pick<Therapy, "invoice">>
+  ) {
+    return Therapies.repository().updateTherapy(id, therapy);
   }
 }
 
@@ -27,17 +33,21 @@ class TherapyRepository {
     this.calendar = calendar;
   }
 
-  getTherapies(startTime: Date, endTime: Date): Therapy[] {
-    const events = this.calendar.getEvents(startTime, endTime);
-    return events.map((event) => {
-      const description = event.getDescription();
-      const [cipher, type] = description.split(" - ");
-      return { cipher, type };
-    });
+  getTherapies(): Therapy[] {
+    const now = new Date();
+    const nowMinusOneYear = new Date();
+    nowMinusOneYear.setFullYear(nowMinusOneYear.getFullYear() - 1);
+    const events = this.calendar.getEvents(now, nowMinusOneYear);
+    return events.map((event) => ({
+      id: event.getId(),
+      title: event.getTitle(),
+      patientEmail: event.getGuestList(false)[0].getEmail(),
+      description: event.getDescription(),
+    }));
   }
 
-  getTherapiesForPatient(patient: Patient, startTime: Date, endTime: Date) {
-    const therapies = this.getTherapies(startTime, endTime);
-    return therapies.filter((therapy) => therapy.cipher === patient.email);
+  updateTherapy(id: string, { invoice }: Required<Pick<Therapy, "invoice">>) {
+    const event = this.calendar.getEventById(id);
+    event.setDescription("Rechnung: " + invoice.link);
   }
 }

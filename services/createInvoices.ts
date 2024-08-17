@@ -1,13 +1,16 @@
 import { Invoices } from "../repositories/invoices";
 import { Patients } from "../repositories/patients";
+import { Therapies } from "../repositories/therapies";
 
 export function createInvoices() {
-  const patient = Patients.getPatients()[0];
-  Invoices.addInvoice({
-    patient,
-    positions: [
-      { description: "Therapie", amount: 1, price: 50 },
-      { description: "Material", amount: 1, price: 20 },
-    ],
-  });
+  Therapies.getTherapies()
+    .filter((therapy) => !therapy.invoice)
+    .forEach((therapy) => {
+      const patient = Patients.getPatient(therapy.patientEmail);
+      const invoice = Invoices.addInvoice({
+        patient,
+        positions: [{ description: therapy.title, amount: 1, price: 50 }],
+      });
+      Therapies.updateTherapy(therapy.id, { invoice });
+    });
 }

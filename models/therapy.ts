@@ -1,4 +1,8 @@
+import { Invoice } from "./invoice";
+
 export interface Therapy {
-  cipher: string;
-  type: string;
+  id: string;
+  title: string;
+  patientEmail: string;
+  invoice?: Invoice;
 }
