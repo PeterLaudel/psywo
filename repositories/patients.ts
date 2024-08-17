@@ -20,10 +20,6 @@ export class Patients {
     return Patients.repository().getPatients();
   }
 
-  static getPatient(email: string) {
-    return Patients.repository().getPatient(email);
-  }
-
   static addPatient(patient: CreatePatient) {
     return Patients.repository().addPatient(patient);
   }
@@ -68,19 +64,7 @@ class PatientRepository {
       this.patientContactGroup.resourceName
     );
 
-    return {
-      firstName: person.names[0].givenName,
-      lastName: person.names[0].familyName,
-      email: person.emailAddresses[0].value,
-      street: person.addresses[0].streetAddress,
-      postalCode: person.addresses[0].postalCode,
-      city: person.addresses[0].city,
-      birthdate: new Date(
-        person.birthdays[0].date.year,
-        person.birthdays[0].date.month - 1,
-        person.birthdays[0].date.day
-      ),
-    };
+    return this.personToPatient(person);
   }
 
   getPatients() {
@@ -93,7 +77,7 @@ class PatientRepository {
     // Holen Sie die Kontakte für diese Ressourcennamen
     const contactsResponse = People.People.getBatchGet({
       resourceNames: memberResourceNames,
-      personFields: "resourceName,names,emailAddresses,addresses,birthdays",
+      personFields: "names,emailAddresses,addresses,birthdays",
     });
     return contactsResponse.responses.map(({ person }) =>
       this.personToPatient(person)
@@ -104,7 +88,6 @@ class PatientRepository {
     person: GoogleAppsScript.People.Schema.Person
   ): Patient {
     return {
-      id: person.resourceName,
       firstName: person.names[0].givenName,
       lastName: person.names[0].familyName,
       email: person.emailAddresses[0].value,
