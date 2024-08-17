@@ -36,7 +36,7 @@ class TherapyRepository {
   getTherapies(): Therapy[] {
     const now = new Date();
     const nowMinusOneYear = new Date(now.getTime() - 31557600000);
-    const events = this.calendar.getEventsForDay(nowMinusOneYear, now);
+    const events = this.calendar.getEvents(nowMinusOneYear, now);
     return events.map((event) => ({
       id: event.getId(),
       title: event.getTitle(),
