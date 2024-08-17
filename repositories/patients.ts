@@ -1,4 +1,3 @@
-import { Administration } from "../documents/administration";
 import type { Patient } from "../models/patient";
 
 type CreatePatient = Pick<
@@ -85,38 +84,20 @@ class PatientRepository {
   }
 
   getPatients() {
+    const groupResponse = People.ContactGroups.get(
+      this.patientContactGroup.resourceName,
+      { maxMembers: 25000 }
+    );
+    const memberResourceNames = groupResponse.memberResourceNames || [];
+
     // Holen Sie die Kontakte für diese Ressourcennamen
     const contactsResponse = People.People.getBatchGet({
-      resourceNames: this.memberResourceNames,
+      resourceNames: memberResourceNames,
       personFields: "resourceName,names,emailAddresses,addresses,birthdays",
     });
     return contactsResponse.responses.map(({ person }) =>
       this.personToPatient(person)
     );
-  }
-
-  getPatient(email: string): Patient {
-    const contactsResponse = People.People.getBatchGet({
-      resourceName: this.patientContactGroup.memberResourceNames,
-      personFields: "emailAddresses",
-    });
-
-    const contact = contactsResponse.responses.find(
-      (response) => response.person.emailAddresses[0].value === email
-    );
-
-    const person = People.People.get(contact.person.resourceName, {
-      personFields: "resourceName,names,emailAddresses,addresses,birthdays",
-    });
-
-    return this.personToPatient(person);
-  }
-
-  private get memberResourceNames() {
-    const groupResponse = People.ContactGroups.get(
-      this.patientContactGroup.resourceName
-    );
-    return groupResponse.memberResourceNames || [];
   }
 
   private personToPatient(
