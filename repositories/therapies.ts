@@ -6,7 +6,7 @@ export class Therapies {
   private static repository_: TherapyRepository | null = null;
 
   private static repository(
-    calendar: GoogleAppsScript.Calendar.Calendar = Calenders.calendar
+    calendar: GoogleAppsScript.Calendar.Calendar = Calenders.therapyCalendar
   ) {
     if (Therapies.repository_ === null) {
       Therapies.repository_ = new TherapyRepository(calendar);
@@ -43,7 +43,7 @@ class TherapyRepository {
       id: event.getId(),
       title: event.getTitle(),
       patient: patients.find(
-        ({ email }) => email === event.getGuestList(false)[0].getEmail()
+        ({ email }) => email === event.getGuestList()[0].getEmail()
       ),
       description: event.getDescription(),
     }));

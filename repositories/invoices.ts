@@ -56,4 +56,12 @@ class InvoiceRepository {
 
     return { creationDate, ...invoice, link: newSpreadsheet.getUrl() };
   }
+
+  getInvoices(id: string) {
+    const file = DriveApp.getFileById(id);
+    return {
+      creationDate: file.getDateCreated(),
+      link: file.getUrl(),
+    };
+  }
 }

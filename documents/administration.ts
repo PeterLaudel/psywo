@@ -1,6 +1,5 @@
 export class Administration {
   private static spreadsheet_: GoogleAppsScript.Spreadsheet.Spreadsheet | null = null;
-  private static patientsSheet_: GoogleAppsScript.Spreadsheet.Sheet | null = null;
   private static pricesSheet_: GoogleAppsScript.Spreadsheet.Sheet | null = null;
 
   public static get spreadsheet() {
