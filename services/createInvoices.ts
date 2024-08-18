@@ -1,5 +1,4 @@
 import { Invoices } from "../repositories/invoices";
-import { Patients } from "../repositories/patients";
 import { Therapies } from "../repositories/therapies";
 
 export function createInvoices() {
