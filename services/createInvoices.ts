@@ -3,17 +3,13 @@ import { Patients } from "../repositories/patients";
 import { Therapies } from "../repositories/therapies";
 
 export function createInvoices() {
-  const patients = Patients.getPatients();
   Therapies.getTherapies()
-    .filter((therapy) => !therapy.invoice)
-    .forEach((therapy) => {
-      const patient = patients.find(
-        (patient) => patient.email === therapy.patientEmail
-      );
+    .filter(({ invoice }) => !invoice)
+    .forEach(({ patient, title, id }) => {
       const invoice = Invoices.addInvoice({
         patient,
-        positions: [{ description: therapy.title, amount: 1, price: 50 }],
+        positions: [{ description: title, amount: 1, price: 50 }],
       });
-      Therapies.updateTherapy(therapy.id, { invoice });
+      Therapies.updateTherapy(id, { invoice });
     });
 }

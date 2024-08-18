@@ -1,5 +1,6 @@
 import { Calenders } from "../documents/calenders";
 import { Therapy } from "../models/therapy";
+import { Patients } from "./patients";
 
 export class Therapies {
   private static repository_: TherapyRepository | null = null;
@@ -37,10 +38,13 @@ class TherapyRepository {
     const now = new Date();
     const nowMinusOneYear = new Date(now.getTime() - 31557600000);
     const events = this.calendar.getEvents(nowMinusOneYear, now);
+    const patients = Patients.getPatients();
     return events.map((event) => ({
       id: event.getId(),
       title: event.getTitle(),
-      patientEmail: event.getGuestList(false)[0].getEmail(),
+      patient: patients.find(
+        ({ email }) => email === event.getGuestList(false)[0].getEmail()
+      ),
       description: event.getDescription(),
     }));
   }
