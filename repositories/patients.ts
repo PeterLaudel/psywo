@@ -27,7 +27,6 @@ export class Patients {
 
 class PatientRepository {
   addPatient(patient: CreatePatient): Patient {
-    // Erstellen Sie einen neuen Kontakt mit dem People Service
     const newContact = {
       names: [
         {
@@ -74,7 +73,6 @@ class PatientRepository {
     );
     const memberResourceNames = groupResponse.memberResourceNames || [];
 
-    // Holen Sie die Kontakte für diese Ressourcennamen
     const contactsResponse = People.People.getBatchGet({
       resourceNames: memberResourceNames,
       personFields: "names,emailAddresses,addresses,birthdays",
